@@ -1,0 +1,23 @@
+Goals:
+
+- Saber qual é o preço do frete mais econômico
+- Saber qual é o preço do frete mais rápido
+- Saber qual é a opção de transportadora mais adequada, levando em consideração a cidade de destino e o prazo de entrega.
+
+Tasks:
+
+[] Informar a cidade de destino (mostrar lista de destinos ao clicar. <select>)
+[] Inserir o peso do frete (ter um peso por padrão ao adicionar a cidade)
+[] Botão "Analisar"
+[] Banners
+  - Visualizar o nome da transportadora, o custo total e o tempo de entrega do frete mais econômico
+  - Visualizar o nome da transportadora, o custo total e o tempo de entrega do frete mais rápido
+
+Help:
+
+"id": 1,                                   <--- ID da cotação
+"name": "Expresso Oriente",                <--- Nome da transportadora
+"cost_transport_light": "R$ 2.10",         <--- Custo de Frete até 100Kg [R$/Kg]
+"cost_transport_heavy": "R$ 1.50",         <--- Custo de Frete mais de 100Kg [R$/Kg]
+"city": "São Paulo",                       <--- Cidade de destino
+"lead_time": "12h"                         <--- Tempo de entrega

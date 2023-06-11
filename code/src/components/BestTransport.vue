@@ -1,52 +1,81 @@
 <template>
-  <div class="title">
-    <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand class="ml-2">
-        <b>{{ appName }}</b>
-      </b-navbar-brand>
-    </b-navbar>
+  <div class="content">
+    <div class="data-select">
+      <h1>Insira o destino e o peso</h1>
+      <h2>Destino</h2>
+      <b-form-select v-model="cityName" :options="cities" size="sm" class="mt-3" placeholder="Selecione o destino" />
+      <h2>Peso</h2>
+      <b-form-input v-model="loadWeight" type="number" placeholder="Peso da carga em kg" />
+      <b-button variant="primary" class="button">Analisar</b-button>
+    </div>
+    <div class="data-show">
+      <PriceCard 
+         title="Frete com menor valor"
+         shipping="Blah"
+         time="6h"
+         price="6"
+      />
+    </div>
   </div>
-
 </template>
 
 <script>
-import {
-  BNavbar,
-  BNavbarBrand,
-} from 'bootstrap-vue'
-
+  import PriceCard from "./PriceCard"
 export default {
-  components: {
-    BNavbar,
-    BNavbarBrand,
-  },
   data() {
-    const appName = ''
-
     return {
-      appName,
-    }
+      cityName: null,
+      loadWeight: null,
+      cities: [],
+    };
   },
-  created() {
-    // Implemente aqui o GET dos dados da API REST
-    // para que isso ocorra na inicialização da pagina
-    this.appName = 'Melhor Frete'
+  components: {
+    PriceCard,
+  },
+  async created() {
+    this.cities = await this.getcitynames();
+    console.log(this.cities);
   },
   methods: {
-    // Implemente aqui os metodos utilizados na pagina
-    methodFoo() {
-      console.log(this.appName)
+    async getcitynames() {
+      const res = await fetch("api/transport");
+      const data = await res.json();
+
+      const names = Array.from(new Set(data.map((item) => item.city)));
+
+      return names;
     },
   },
-}
+};
 </script>
 
 <style scoped>
-.title .navbar {
-  background-color: #00aca6 !important;
+.content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  width: 100%;
 }
 
-.title .navbar-brand {
-  margin-left: 20px;
+.data-select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  height: 100%;
+  padding: 5rem 1.5rem;
+  background-color: lightgray;
+  border-radius: 20px;
+}
+
+.data-show {
+  height: 100%;
+  padding: 5rem 1.5rem;
+}
+
+.button {
+  padding: 0 3rem;
 }
 </style>
