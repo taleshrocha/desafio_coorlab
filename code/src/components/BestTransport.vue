@@ -1,41 +1,71 @@
 <template>
-  <div class="content">
-    <div class="data-select">
+<b-row class="m-3">
+  <b-col md="4" class="bg-light rounded-lg border py-5">
+    <b-form @submit="onSubmit" >
       <h1>Insira o destino e o peso</h1>
-      <h2>Destino</h2>
-      <b-form-select v-model="cityName" :options="cities" size="sm" class="mt-3" placeholder="Selecione o destino" />
-      <h2>Peso</h2>
-      <b-form-input v-model="loadWeight" type="number" placeholder="Peso da carga em kg" />
-      <b-button variant="primary" class="button">Analisar</b-button>
-    </div>
-    <div class="data-show">
-      <PriceCard 
-         title="Frete com menor valor"
-         shipping="Blah"
-         time="6h"
-         price="6"
-      />
-    </div>
-  </div>
+      <b-form-group id="input-group-1" label="Destino" label-for="input-1">
+        <b-form-select
+          id="input-1"
+          v-model="form.cityName"
+          :options="cities"
+          placeholder="Selecione o destino"
+          required
+        />
+      </b-form-group>
+
+      <b-form-group id="input-group-2" label="Peso" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.loadWeight"
+          placeholder="Insira o peso"
+          required
+        />
+      </b-form-group>
+
+      <b-button type="submit" variant="primary">Analisar</b-button>
+    </b-form>
+  </b-col>
+
+  <b-col>
+    <PriceCard
+      title="Frete com menor valor"
+      shipping="Blah"
+      time="6h"
+      price="6"
+      iconName="cash-coin"
+    />
+    <PriceCard
+      title="Frete mais rápido"
+      shipping="Blah"
+      time="6h"
+      price="6"
+      iconName="clock"
+    />
+  </b-col>
+</b-row>
 </template>
 
 <script>
-  import PriceCard from "./PriceCard"
+import PriceCard from "./PriceCard";
 export default {
   data() {
     return {
-      cityName: null,
-      loadWeight: null,
       cities: [],
+      form: {
+        cityName: "",
+        loadWeight: null,
+      },
     };
   },
   components: {
     PriceCard,
   },
+
   async created() {
     this.cities = await this.getcitynames();
     console.log(this.cities);
   },
+
   methods: {
     async getcitynames() {
       const res = await fetch("api/transport");
@@ -45,37 +75,10 @@ export default {
 
       return names;
     },
+    onSubmit(event) {
+      event.preventDefault();
+      alert(JSON.stringify(this.form));
+    },
   },
 };
 </script>
-
-<style scoped>
-.content {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 20px;
-  padding: 1.5rem;
-  margin-top: 1rem;
-  width: 100%;
-}
-
-.data-select {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  height: 100%;
-  padding: 5rem 1.5rem;
-  background-color: lightgray;
-  border-radius: 20px;
-}
-
-.data-show {
-  height: 100%;
-  padding: 5rem 1.5rem;
-}
-
-.button {
-  padding: 0 3rem;
-}
-</style>

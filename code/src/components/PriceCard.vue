@@ -1,5 +1,5 @@
 <template>
-  <b-row>
+  <b-row class="mb-3">
     <b-col md="9">
       <b-card no-body class="h-100">
         <b-row no-gutters>
@@ -7,7 +7,7 @@
             md="2"
             class="bg-info d-flex justify-content-center align-items-center"
           >
-            <b-icon class="w-50 h-50" icon="cash-coin"></b-icon>
+            <b-icon class="w-50 h-50" :icon="iconName"></b-icon>
           </b-col>
 
           <b-col md="10">
@@ -45,6 +45,7 @@ export default {
     shipping: String,
     price: String,
     time: String, // TODO: make this to be Time
+    iconName: String,
   },
 };
 </script>

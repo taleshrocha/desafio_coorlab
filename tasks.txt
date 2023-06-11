@@ -9,7 +9,7 @@ Tasks:
 [] Informar a cidade de destino (mostrar lista de destinos ao clicar. <select>)
 [] Inserir o peso do frete (ter um peso por padrão ao adicionar a cidade)
 [] Botão "Analisar"
-[] Banners
+[X] Cards
   - Visualizar o nome da transportadora, o custo total e o tempo de entrega do frete mais econômico
   - Visualizar o nome da transportadora, o custo total e o tempo de entrega do frete mais rápido
 
