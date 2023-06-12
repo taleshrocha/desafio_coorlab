@@ -1,28 +1,52 @@
 <template>
   <b-row class="m-3">
-    <b-col md="4" class="bg-light rounded-lg border py-5">
-      <b-form @submit="onSubmit">
-        <h1>Insira o destino e o peso</h1>
-        <b-form-group id="input-group-1" label="Destino" label-for="input-1">
-          <b-form-select id="input-1" v-model="form.cityName" :options="cities" placeholder="Selecione o destino"
-            required />
-        </b-form-group>
+    <b-col class="m-auto">
+      <b-row class="border bg-gradient p-2 mx-2" fluid="true" v-show="!showInfo">
+        <b-col md="7">
+          <h1 class="text-prime border-prime font-weight-bolder">
+            Encontre o melhor frete!
+          </h1>
+          <h2 class="text-prime mt-4">
+            Com a DesCoor você descobre o melhor preço e o melhor tempo de
+            entrega dentre diversas empresas de frete do Brasil
+          </h2>
+        </b-col>
+        <b-col>
+          <img fluid class="m-0 p-0" src="../../assets/package.png" alt="Image by xvector on Freepik" width="300"
+            height="300" />
+        </b-col>
+      </b-row>
 
-        <b-form-group id="input-group-2" label="Peso" label-for="input-2">
-          <b-form-input id="input-2" v-model="form.loadWeight" placeholder="Insira o peso" required />
-        </b-form-group>
-
-        <b-button type="submit" variant="primary">Analisar</b-button>
-      </b-form>
-    </b-col>
-
-    <b-col>
       <b-container fluid="true" v-show="showInfo">
         <PriceCard title="Frete com menor valor" :shipping="cheapestFreight.name" :time="cheapestFreight.lead_time"
           :price="cheapestFreight[costTransport]" iconName="cash-coin" />
         <PriceCard title="Frete mais rápido" :shipping="fastestFreight.name" :time="fastestFreight.lead_time"
           :price="fastestFreight[costTransport]" iconName="clock" />
       </b-container>
+    </b-col>
+
+    <b-col md="4" class="bg-light rounded-lg border py-5">
+      <b-form @submit="onSubmit" class="d-flex flex-column justify-content-center">
+        <h1>Insira o destino e o peso</h1>
+        <b-form-group id="input-group-1" label="Destino*" label-for="input-1">
+          <b-form-select class="rounded-pill" id="input-1" v-model="form.cityName" :options="cities"
+            placeholder="Selecione o destino" required />
+          <b-form-invalid-feedback :state="validation">
+            Your user ID must be 5-12 characters long.
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group id="input-group-2" label="Peso*" label-for="input-2">
+          <b-form-input class="rounded-pill" id="input-2" v-model="form.loadWeight" placeholder="Insira o peso"
+            required />
+        </b-form-group>
+
+        <button class="rounded-pill bg-prime border-0 p-2 font-weight-bold text-body" type="submit">Analisar</button>
+
+        <b-modal v-show="showModal" centered title="BootstrapVue">
+          <p class="my-4">Vertically centered modal!</p>
+        </b-modal>
+      </b-form>
     </b-col>
   </b-row>
 </template>
@@ -33,6 +57,7 @@ export default {
   data() {
     return {
       showInfo: false,
+      showModal: false,
       costTransport: "",
       cities: [],
       cheapestFreight: {},
@@ -67,14 +92,13 @@ export default {
       this.freightsToCity = this.freights.filter(
         (freight) => freight.city === this.form.cityName
       );
-      // TODO: if cheapest as fastest is the same lead time. Then: show cheapest
       this.getCheapestFreight();
       this.getFastestFreight();
+
       if (this.cheapestFreight.lead_time === this.fastestFreight.lead_time) {
-        this.fastestFreight = this.cheapestFreight
+        this.fastestFreight = this.cheapestFreight;
       }
-      this.showInfo = true
-      //alert(JSON.stringify(this.form));
+      this.showInfo = true;
     },
     getCheapestFreight() {
       this.costTransport =
@@ -100,3 +124,14 @@ export default {
   },
 };
 </script>
+
+<style>
+.border-prime {
+  border-left: 0.5rem solid rgb(var(--color-prime));
+  padding: 0.5rem;
+}
+
+.bg-gradient {
+  background: rgba(250, 200, 0, 1);
+}
+</style>
