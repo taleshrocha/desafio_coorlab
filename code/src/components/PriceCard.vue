@@ -31,7 +31,7 @@
           <b-card-title class="font-weight-bold text-capitalize"
             >Preço</b-card-title
           >
-          <b-card-text>Preço: R$ {{ price }}</b-card-text>
+          <b-card-text>{{ price }}</b-card-text>
         </b-card-body>
       </b-card>
     </b-col>
