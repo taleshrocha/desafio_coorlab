@@ -1,41 +1,22 @@
 <template>
-  <b-row class="mb-3">
-    <b-col md="9">
-      <b-card no-body class="h-100">
-        <b-row no-gutters>
-          <b-col
-            md="2"
-            class="bg-info d-flex justify-content-center align-items-center"
-          >
-            <b-icon class="w-50 h-50" :icon="iconName"></b-icon>
-          </b-col>
+  <div class="grid grid-cols-3 gap-4 text-secondary font-semibold text-2xl">
 
-          <b-col md="10">
-            <b-card-body>
-              <b-card-title class="font-weight-bold text-capitalize">{{
-                title
-              }}</b-card-title>
-              <b-card-text class="m-0"
-                >Transportadora: {{ shipping }}</b-card-text
-              >
-              <b-card-text class="m-0">Tempo Estimado: {{ time }}</b-card-text>
-            </b-card-body>
-          </b-col>
-        </b-row>
-      </b-card>
-    </b-col>
+    <div class="grid grid-cols-3 col-span-2 border-2 rounded-lg border-secondary">
+      <p class="bg-primary">*</p>
 
-    <b-col md="3">
-      <b-card no-body class="h-100">
-        <b-card-body>
-          <b-card-title class="font-weight-bold text-capitalize"
-            >Preço</b-card-title
-          >
-          <b-card-text>{{ price }}</b-card-text>
-        </b-card-body>
-      </b-card>
-    </b-col>
-  </b-row>
+      <div class="col-span-2 p-4">
+        <h3 class="font-bold text-3xl text-primary text-shadow">{{ title }}</h3>
+        <p class="mt-4 ml-4">Transportadora: {{ shipping }}</p>
+        <p class="ml-4">Tempo Estimado: {{ time }}</p>
+      </div>
+    </div>
+
+    <div class="border-2 border-secondary rounded-lg p-4">
+      <h3 class="font-bold text-primary text-shadow text-3xl">Preço</h3>
+      <p class="mt-4 ml-4">{{ price }}</p>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -44,7 +25,7 @@ export default {
     title: String,
     shipping: String,
     price: String,
-    time: String, // TODO: make this to be Time
+    time: String,
     iconName: String,
   },
 };
