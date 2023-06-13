@@ -1,11 +1,11 @@
 <template>
     <div>
-        <form class="flex flex-col justify-center border-2 border-secondary rounded-lg p-4 text-secondary"
+        <form class="flex flex-col justify-center border-2 border-secondary rounded-lg p-4 text-secondary font-semibold"
             @submit="onSubmit">
             <h1 class="text-3xl font-bold">Insira o destino e o peso</h1>
 
             <div class="flex flex-col mt-4">
-                <label for="input-1" class="text-sm font-medium">Destino*</label>
+                <label for="input-1" class="text-xl">Destino*</label>
                 <select id="input-1" v-model="cityName"
                     class="rounded-full border-secondary focus:ring-primary focus:border-primary mt-1.5 py-2 px-4">
                     <option value="" disabled selected>Selecione o destino</option>
@@ -14,9 +14,9 @@
             </div>
 
             <div class="flex flex-col mt-4">
-                <label for="input-2" class="text-sm font-medium text-gray-700">Peso (kg)*</label>
+                <label for="input-2" class="text-xl">Peso (kg)*</label>
                 <input id="input-2" type="text" v-model="loadWeight"
-                    class="rounded-full border-gray-300 focus:ring-primary focus:border-primary mt-1.5 py-2 px-4"
+                    class="rounded-full focus:ring-primary focus:border-primary mt-1.5 py-2 px-4"
                     placeholder="Insira o peso"/>
             </div>
 
