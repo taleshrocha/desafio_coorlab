@@ -85,14 +85,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.border-prime {
-  border-left: 0.5rem solid rgb(var(--color-prime));
-  padding: 0.5rem;
-}
-
-.bg-gradient {
-  background: rgba(250, 200, 0, 1);
-}
-</style>
