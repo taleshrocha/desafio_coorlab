@@ -2,9 +2,9 @@
   <div class="grid grid-cols-3 gap-4 text-secondary font-semibold text-2xl">
 
     <div class="grid grid-cols-3 col-span-2 border-2 rounded-lg border-secondary">
-      <p class="bg-primary">*</p>
+      <img class="-my-4 -mx-2" :src="require(`../../assets/${imageName}`)" width="500" height="500" />
 
-      <div class="col-span-2 p-4">
+      <div class="col-span-2 p-2 -ml-4">
         <h3 class="font-bold text-3xl text-primary text-shadow">{{ title }}</h3>
         <p class="mt-4 ml-4">Transportadora: {{ name }}</p>
         <p class="ml-4">Tempo Estimado: {{ time }}</p>
@@ -26,7 +26,7 @@ export default {
     name: String,
     price: String,
     time: String,
-    iconName: String,
+    imageName: String,
   },
 };
 </script>

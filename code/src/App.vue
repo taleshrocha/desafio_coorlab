@@ -2,16 +2,23 @@
   <main class="grid grid-cols-1 lg:grid-cols-3 place-items-center min-h-screen h-full bg-background p-8 gap-4">
     <CustomForm @form-submitted="handleFormSubmit" :cities="cities" />
 
-    <FrontCard v-show="!showPriceCard" class="lg:col-span-2" />
+    <transition enter-active-class="duration-300 ease-out" leave-active-class="duration-200 ease-in"
+      enter-class="opacity-0" leave-to-class="opacity-0">
+    <FrontCard v-show="showFrontCard" class="lg:col-span-2" />
+    </transition>
 
-    <div v-show="showPriceCard" class="lg:col-span-2 grid grid-rows-2 gap-4">
-      <PriceCard title="Frete Mais Barato" :name="freights.cheapest.name" :time="freights.cheapest.lead_time"
-        :price="freights.cheapest[freights.costTransport]" />
-      <PriceCard title="Frete Mais Rápido" :name="freights.fastest.name" :time="freights.fastest.lead_time"
-        :price="freights.fastest[freights.costTransport]" />
-      <button @click="$event => showPriceCard = false"
-        class="rounded-full bg-primary border-0 p-2 font-bold text-white mt-4">Limpar</button>
-    </div>
+
+    <transition enter-active-class="duration-300 ease-out" leave-active-class="duration-200 ease-in"
+      enter-class="opacity-0" leave-to-class="opacity-0">
+      <div v-show="showPriceCard" class="lg:col-span-2 grid grid-rows-2 gap-4">
+        <PriceCard title="Frete Mais Barato" :name="freights.cheapest.name" :time="freights.cheapest.lead_time"
+          :price="freights.cheapest[freights.costTransport]" imageName="money.png" />
+        <PriceCard title="Frete Mais Rápido" :name="freights.fastest.name" :time="freights.fastest.lead_time"
+          :price="freights.fastest[freights.costTransport]" imageName="clock.png" />
+        <button @click="handleClean"
+          class="rounded-full bg-primary border-0 p-2 font-bold text-white mt-4">Limpar</button>
+      </div>
+    </transition>
   </main>
 </template>
 
@@ -29,7 +36,9 @@ export default {
   },
   data() {
     return {
+      imageName: "../../assets/clock.png",
       showPriceCard: false,
+      showFrontCard: true,
       cities: [],
       freights: {
         all: [],
@@ -62,7 +71,21 @@ export default {
         this.freights.fastest = this.freights.cheapest;
       }
 
-      this.showPriceCard = true;
+      this.showFrontCard = false;
+
+      setTimeout(() => {
+        this.showPriceCard = true;
+      }, 300);
+    },
+    handleClean() {
+
+      // Hide the price card and show the front card
+      this.showPriceCard = false;
+
+      setTimeout(() => {
+        this.showFrontCard = true;
+      }, 300);
+
     },
     getCheapestFreight({ freightsToCity, loadWeight }) {
       // If the loadWeight is more than 100kg, then we'll get the cost for the heavy transport.

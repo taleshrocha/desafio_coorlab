@@ -6,7 +6,7 @@
 
             <div class="flex flex-col mt-4">
                 <label for="input-1" class="text-sm font-medium">Destino*</label>
-                <select id="input-1" v-model="cityname"
+                <select id="input-1" v-model="cityName"
                     class="rounded-full border-secondary focus:ring-primary focus:border-primary mt-1.5 py-2 px-4">
                     <option value="" disabled selected>Selecione o destino</option>
                     <option v-for="city in cities" :value="city" :key="city">{{ city }}</option>
@@ -15,7 +15,7 @@
 
             <div class="flex flex-col mt-4">
                 <label for="input-2" class="text-sm font-medium text-gray-700">Peso*</label>
-                <input id="input-2" type="text" v-model="loadweight"
+                <input id="input-2" type="text" v-model="loadWeight"
                     class="rounded-full border-gray-300 focus:ring-primary focus:border-primary mt-1.5 py-2 px-4"
                     placeholder="Insira o peso"/>
             </div>
@@ -28,7 +28,7 @@
             <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                 <div class="bg-background rounded-lg p-8 flex flex-col items-center justify-center space-y-4 border-2 border-secondary">
                     <span class="text-red-500 font-bold text-6xl p-4 border-4 border-red-500 rounded-lg">!</span>
-                    <h2 class="text-xl font-bold mb-4 text-secondary">Preencha todos os campos</h2>
+                    <h2 class="text-xl font-bold mb-4 text-secondary">Preencha todos os campos e insira valores válidos</h2>
                     <button class="rounded-full bg-primary border-0 p-2 font-bold text-white w-full"
                         @click="$event => this.showModal = false">Fechar</button>
                 </div>
@@ -44,18 +44,18 @@ export default {
     },
     data() {
         return {
-            cityname: '',
-            loadweight: 300,
+            cityName: '',
+            loadWeight: '',
             showModal: false,
         };
     },
     methods: {
         onSubmit(event) {
             event.preventDefault();
-            if (this.cityname && this.loadweight) {
+            if (this.cityName && this.loadWeight > 0) {
                 this.$emit('form-submitted', {
-                    cityName: this.cityname,
-                    loadWeight: this.loadweight,
+                    cityName: this.cityName,
+                    loadWeight: this.loadWeight,
                 });
             } else {
                 this.showModal = true;
