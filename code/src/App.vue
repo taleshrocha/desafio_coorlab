@@ -1,55 +1,91 @@
 <template>
   <main class="grid grid-cols-1 lg:grid-cols-3 place-items-center min-h-screen h-full bg-background p-8 gap-4">
-    <!--
-<FrontCard class="lg:col-span-2" />
-    -->
-    <PriceCard 
-    class="col-span-2"
-    title="Frete com o Menor Custo"
-    shipping="Levoja"
-    time="6h"
-    price="150 R$"
-    />
-    <CustomForm @form-submitted="handleFormSubmit" :cities="cities"/>
+    <CustomForm @form-submitted="handleFormSubmit" :cities="cities" />
+
+    <FrontCard v-show="!showPriceCard" class="lg:col-span-2" />
+
+    <div v-show="showPriceCard" class="lg:col-span-2 grid grid-rows-2 gap-4">
+      <PriceCard title="Frete Mais Barato" :name="freights.cheapest.name" :time="freights.cheapest.lead_time"
+        :price="freights.cheapest[freights.costTransport]" />
+      <PriceCard title="Frete Mais Rápido" :name="freights.fastest.name" :time="freights.fastest.lead_time"
+        :price="freights.fastest[freights.costTransport]" />
+    </div>
   </main>
 </template>
 
 <script>
-//import FrontCard from './components/FrontCard.vue';
+import FrontCard from './components/FrontCard.vue';
 import CustomForm from './components/CustomForm.vue';
 import PriceCard from './components/PriceCard.vue';
 
 export default {
   name: "App",
   components: {
-    //FrontCard,
+    FrontCard,
     CustomForm,
     PriceCard,
-},
+  },
   data() {
     return {
+      showPriceCard: false,
       cities: [],
-      freights: [],
-      form: {
-        cityname: "",
-        loadweight: 0,
+      freights: {
+        all: [],
+        cheapest: {},
+        fastest: {},
+        costTransport: "",
       },
     };
   },
   async created() {
-    this.freights = await this.getFreights();
-    this.cities = Array.from(new Set(this.freights.map((freigh) => freigh.city)));
+    // Get all freights from API.
+    const res = await fetch("api/transport");
+    this.freights.all = await res.json();
+
+    // Get all city names and make sure they are unique.
+    this.cities = Array.from(new Set(this.freights.all.map((freight) => freight.city)));
   },
   methods: {
-    async getFreights() {
-      const res = await fetch("api/transport");
-      const data = await res.json();
+    handleFormSubmit({ cityName, loadWeight }) {
+      // Get all the freights that go to the selected city.
+      const freightsToCity = this.freights.all.filter(
+        (freight) => freight.city === cityName
+      );
 
-      return data;
+      // Get cheapest and fastest freight.
+      this.freights.cheapest = this.getCheapestFreight({ freightsToCity, loadWeight });
+      this.freights.fastest = this.getFastestFreight({ freightsToCity });
+
+      if (this.freights.cheapest.lead_time === this.freights.fastest.lead_time) {
+        this.freights.fastest = this.freights.cheapest;
+      }
+
+      this.showPriceCard = true;
     },
-    handleFormSubmit(data) {
-      console.log(data)
-    }
-  }
+    getCheapestFreight({ freightsToCity, loadWeight }) {
+      // If the loadWeight is more than 100kg, then we'll get the cost for the heavy transport.
+      // Else, we'll get the cost for the light transport.
+      this.freights.costTransport =
+        loadWeight > 100
+          ? "cost_transport_heavy"
+          : "cost_transport_light";
+
+      // Gets the freight to the selected city with the minimum cost.
+      return freightsToCity.reduce((min, freight) => {
+        return parseFloat(freight[this.freights.costTransport].replace("R$", "")) <
+          parseFloat(min[this.freights.costTransport].replace("R$", ""))
+          ? freight
+          : min;
+      });
+    },
+    getFastestFreight({ freightsToCity }) {
+      return freightsToCity.reduce((min, freight) => {
+        return parseFloat(freight.lead_time.replace("h", "")) <
+          parseFloat(min.lead_time.replace("h", ""))
+          ? freight
+          : min;
+      });
+    },
+  },
 };
 </script>

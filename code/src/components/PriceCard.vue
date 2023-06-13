@@ -6,7 +6,7 @@
 
       <div class="col-span-2 p-4">
         <h3 class="font-bold text-3xl text-primary text-shadow">{{ title }}</h3>
-        <p class="mt-4 ml-4">Transportadora: {{ shipping }}</p>
+        <p class="mt-4 ml-4">Transportadora: {{ name }}</p>
         <p class="ml-4">Tempo Estimado: {{ time }}</p>
       </div>
     </div>
@@ -23,7 +23,7 @@
 export default {
   props: {
     title: String,
-    shipping: String,
+    name: String,
     price: String,
     time: String,
     iconName: String,
