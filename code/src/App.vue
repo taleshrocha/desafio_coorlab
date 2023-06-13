@@ -1,15 +1,16 @@
 <template>
-  <main class="min-h-screen h-full">
+  <main class="min-h-screen h-full bg-background">
+    <FrontCard />
   </main>
 </template>
 
 <script>
-//import CustomFooter from "./components/CustomFooter.vue";
+import FrontCard from './components/FrontCard.vue';
 
 export default {
   name: "App",
   components: {
-    //CustomFooter,
-  },
+    FrontCard
+},
 };
 </script>

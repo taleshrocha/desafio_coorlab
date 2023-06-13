@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         primary: "#28D5D3",     // Cyan
-        secondary: "#45E1C4",   // Teal
+        secondary: "#005B62", 
         accent: "#6FEBAF",      // Lime
         success: "#9BF297",     // Light Green
         warning: "#C9F781",     // Lime Green
