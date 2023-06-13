@@ -26,7 +26,7 @@
         <transition enter-active-class="duration-300 ease-out" leave-active-class="duration-200 ease-in"
             enter-class="opacity-0" leave-to-class="opacity-0">
             <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                <div class="bg-background rounded-lg p-8 flex flex-col items-center justify-center space-y-4">
+                <div class="bg-background rounded-lg p-8 flex flex-col items-center justify-center space-y-4 border-2 border-secondary">
                     <span class="text-red-500 font-bold text-6xl p-4 border-4 border-red-500 rounded-lg">!</span>
                     <h2 class="text-xl font-bold mb-4 text-secondary">Preencha todos os campos</h2>
                     <button class="rounded-full bg-primary border-0 p-2 font-bold text-white w-full"

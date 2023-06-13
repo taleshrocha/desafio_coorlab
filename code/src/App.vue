@@ -9,6 +9,8 @@
         :price="freights.cheapest[freights.costTransport]" />
       <PriceCard title="Frete Mais Rápido" :name="freights.fastest.name" :time="freights.fastest.lead_time"
         :price="freights.fastest[freights.costTransport]" />
+      <button @click="$event => showPriceCard = false"
+        class="rounded-full bg-primary border-0 p-2 font-bold text-white mt-4">Limpar</button>
     </div>
   </main>
 </template>
