@@ -14,7 +14,7 @@
             </div>
 
             <div class="flex flex-col mt-4">
-                <label for="input-2" class="text-sm font-medium text-gray-700">Peso*</label>
+                <label for="input-2" class="text-sm font-medium text-gray-700">Peso (kg)*</label>
                 <input id="input-2" type="text" v-model="loadWeight"
                     class="rounded-full border-gray-300 focus:ring-primary focus:border-primary mt-1.5 py-2 px-4"
                     placeholder="Insira o peso"/>
@@ -52,7 +52,7 @@ export default {
     methods: {
         onSubmit(event) {
             event.preventDefault();
-            if (this.cityName && this.loadWeight > 0) {
+            if (this.cityName && !isNaN(this.loadWeight) && this.loadWeight > 0) {
                 this.$emit('form-submitted', {
                     cityName: this.cityName,
                     loadWeight: this.loadWeight,

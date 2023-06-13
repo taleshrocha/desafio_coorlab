@@ -1,24 +1,29 @@
 <template>
-  <main class="grid grid-cols-1 lg:grid-cols-3 place-items-center min-h-screen h-full bg-background p-8 gap-4">
-    <CustomForm @form-submitted="handleFormSubmit" :cities="cities" />
+  <main class="flex flex-col min-h-screen h-full bg-background justify-between items-center">
+    <div class="flex-1 grid grid-cols-1 lg:grid-cols-3 place-items-center h-full p-8 gap-4">
 
-    <transition enter-active-class="duration-300 ease-out" leave-active-class="duration-200 ease-in"
-      enter-class="opacity-0" leave-to-class="opacity-0">
-    <FrontCard v-show="showFrontCard" class="lg:col-span-2" />
-    </transition>
+      <CustomForm @form-submitted="handleFormSubmit" :cities="cities" />
+
+      <transition enter-active-class="duration-300 ease-out" leave-active-class="duration-200 ease-in"
+        enter-class="opacity-0" leave-to-class="opacity-0">
+        <FrontCard v-show="showFrontCard" class="lg:col-span-2" />
+      </transition>
 
 
-    <transition enter-active-class="duration-300 ease-out" leave-active-class="duration-200 ease-in"
-      enter-class="opacity-0" leave-to-class="opacity-0">
-      <div v-show="showPriceCard" class="lg:col-span-2 grid grid-rows-2 gap-4">
-        <PriceCard title="Frete Mais Barato" :name="freights.cheapest.name" :time="freights.cheapest.lead_time"
-          :price="freights.cheapest[freights.costTransport]" imageName="money.png" />
-        <PriceCard title="Frete Mais Rápido" :name="freights.fastest.name" :time="freights.fastest.lead_time"
-          :price="freights.fastest[freights.costTransport]" imageName="clock.png" />
-        <button @click="handleClean"
-          class="rounded-full bg-primary border-0 p-2 font-bold text-white mt-4">Limpar</button>
-      </div>
-    </transition>
+      <transition enter-active-class="duration-300 ease-out" leave-active-class="duration-200 ease-in"
+        enter-class="opacity-0" leave-to-class="opacity-0">
+        <div v-show="showPriceCard" class="lg:col-span-2 grid grid-rows-2 gap-4">
+          <PriceCard title="Frete Mais Barato" :name="freights.cheapest.name" :time="freights.cheapest.lead_time"
+            :price="freights.cheapest[freights.costTransport]" imageName="money.png" />
+          <PriceCard title="Frete Mais Rápido" :name="freights.fastest.name" :time="freights.fastest.lead_time"
+            :price="freights.fastest[freights.costTransport]" imageName="clock.png" />
+          <button @click="handleClean"
+            class="rounded-full bg-primary border-0 p-2 font-bold text-white mt-4">Limpar</button>
+        </div>
+      </transition>
+    </div>
+
+    <CustomFooter />
   </main>
 </template>
 
@@ -26,6 +31,7 @@
 import FrontCard from './components/FrontCard.vue';
 import CustomForm from './components/CustomForm.vue';
 import PriceCard from './components/PriceCard.vue';
+import CustomFooter from './components/CustomFooter.vue';
 
 export default {
   name: "App",
@@ -33,7 +39,8 @@ export default {
     FrontCard,
     CustomForm,
     PriceCard,
-  },
+    CustomFooter
+},
   data() {
     return {
       imageName: "../../assets/clock.png",
