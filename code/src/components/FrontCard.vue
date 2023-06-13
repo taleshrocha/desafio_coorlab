@@ -9,7 +9,7 @@
                 entrega dentre diversas empresas de frete do Brasil
             </h2>
         </div>
-        <img fluid class="m-0 p-0" src="../../assets/package.png" alt="Image by xvector on Freepik" width="300"
+        <img fluid class="invisible md:visible m-0 p-0 flex-none" src="../../assets/package.png" alt="Image by xvector on Freepik" width="300"
             height="300" />
     </div>
 </template>

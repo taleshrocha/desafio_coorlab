@@ -8,98 +8,76 @@
       </b-container>
     </b-col>
 
-    <b-col md="4" class="bg-light rounded-lg border py-5">
-      <b-form @submit="onSubmit" class="d-flex flex-column justify-content-center">
-        <h1>Insira o destino e o peso</h1>
-        <b-form-group id="input-group-1" label="Destino*" label-for="input-1">
-          <b-form-select class="rounded-pill" id="input-1" v-model="form.cityName" :options="cities"
-            placeholder="Selecione o destino" required />
-          <b-form-invalid-feedback :state="validation">
-            Your user ID must be 5-12 characters long.
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group id="input-group-2" label="Peso*" label-for="input-2">
-          <b-form-input class="rounded-pill" id="input-2" v-model="form.loadWeight" placeholder="Insira o peso"
-            required />
-        </b-form-group>
-
-        <button class="rounded-pill bg-prime border-0 p-2 font-weight-bold text-body" type="submit">Analisar</button>
-
-        <b-modal v-show="showModal" centered title="BootstrapVue">
-          <p class="my-4">Vertically centered modal!</p>
-        </b-modal>
-      </b-form>
     </b-col>
   </b-row>
 </template>
 
 <script>
-import PriceCard from "./PriceCard";
+import pricecard from "./pricecard";
 export default {
   data() {
     return {
-      showInfo: false,
-      showModal: false,
-      costTransport: "",
+      showinfo: false,
+      showmodal: false,
+      costtransport: "",
       cities: [],
-      cheapestFreight: {},
-      fastestFreight: {},
-      freightsToCity: [],
+      cheapestfreight: {},
+      fastestfreight: {},
+      freightstocity: [],
       freights: [],
       form: {
-        cityName: "",
-        loadWeight: 0,
+        cityname: "",
+        loadweight: 0,
       },
     };
   },
   components: {
-    PriceCard,
+    pricecard,
   },
 
   async created() {
-    this.freights = await this.getTrasports();
-    // TODO: comment
-    this.cities = Array.from(new Set(this.freights.map((item) => item.city)));
+    this.freights = await this.gettrasports();
+    // todo: comment
+    this.cities = array.from(new set(this.freights.map((item) => item.city)));
   },
 
   methods: {
-    async getTrasports() {
+    async gettrasports() {
       const res = await fetch("api/transport");
       const data = await res.json();
 
       return data;
     },
-    onSubmit(event) {
-      event.preventDefault();
-      this.freightsToCity = this.freights.filter(
-        (freight) => freight.city === this.form.cityName
+    onsubmit(event) {
+      event.preventdefault();
+      this.freightstocity = this.freights.filter(
+        (freight) => freight.city === this.form.cityname
       );
-      this.getCheapestFreight();
-      this.getFastestFreight();
+      this.getcheapestfreight();
+      this.getfastestfreight();
 
-      if (this.cheapestFreight.lead_time === this.fastestFreight.lead_time) {
-        this.fastestFreight = this.cheapestFreight;
+      if (this.cheapestfreight.lead_time === this.fastestfreight.lead_time) {
+        this.fastestfreight = this.cheapestfreight;
       }
-      this.showInfo = true;
+      this.showinfo = true;
     },
-    getCheapestFreight() {
-      this.costTransport =
-        this.form.loadWeight > 100
+    getcheapestfreight() {
+      this.costtransport =
+        this.form.loadweight > 100
           ? "cost_transport_heavy"
           : "cost_transport_light";
 
-      this.cheapestFreight = this.freightsToCity.reduce((min, freight) => {
-        return parseFloat(freight[this.costTransport].replace("R$", "")) <
-          parseFloat(min[this.costTransport].replace("R$", ""))
+      this.cheapestfreight = this.freightstocity.reduce((min, freight) => {
+        return parsefloat(freight[this.costtransport].replace("r$", "")) <
+          parsefloat(min[this.costtransport].replace("r$", ""))
           ? freight
           : min;
       });
     },
-    getFastestFreight() {
-      this.fastestFreight = this.freightsToCity.reduce((min, freight) => {
-        return parseFloat(freight.lead_time.replace("h", "")) <
-          parseFloat(min.lead_time.replace("h", ""))
+    getfastestfreight() {
+      this.fastestfreight = this.freightstocity.reduce((min, freight) => {
+        return parsefloat(freight.lead_time.replace("h", "")) <
+          parsefloat(min.lead_time.replace("h", ""))
           ? freight
           : min;
       });
