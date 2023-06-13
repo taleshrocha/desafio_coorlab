@@ -9,8 +9,6 @@
     "api_serve": "json-server --watch data.json"
   },
   "dependencies": {
-    "bootstrap": "^4.6.2",
-    "bootstrap-vue": "^2.22.0",
     "core-js": "^3.8.3",
     "json-server": "^0.17.0",
     "vue": "^2.6.14"
