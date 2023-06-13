@@ -79,6 +79,7 @@ export default {
       });
     },
     getFastestFreight({ freightsToCity }) {
+      // Gets the freight to the selected city with the minimum lead time.
       return freightsToCity.reduce((min, freight) => {
         return parseFloat(freight.lead_time.replace("h", "")) <
           parseFloat(min.lead_time.replace("h", ""))
